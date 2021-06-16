@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<p style="text-align:center"><img src="/static/profile_pics/Million.png" width="200" height="200"></p>
+<h1 style="color:teal;">Welcome to the game <q>Who wants to be a millionaire?</q> </h1><br><br><br>
+
+<h1 style="color:blue;">{{mylis[0]}}</h1>
+
+{% for el in mylis[1].split(",") %}
+  <p>{{el}}</p>
+{% endfor %}
+
+<form method="POST" action="{{url_for('mill.millioner_check')}}">
+  {{form.hidden_tag()}}
+  {{form.fnum.label()}}{{form.fnum}}
+  {{form.play}}
+</form>
+{% if info !=''%}
+{% if info== "Right" %}
+  <p style="color:green;"><b>{{info}}</b></p>
+{% else %}
+  <p style="color:red;"><b>{{info}}</b></p>
+{% endif %}
+<h2>{{number}}/10</h2>
+{%endif%}
+{% endblock %}

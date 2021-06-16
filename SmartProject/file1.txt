@@ -1,0 +1,10 @@
+The capital of England?:1.Paris,2.New York,3.Amsterdam,4.London:London
+Who is the richest man in the world?:1.Elon Musk,2.Bill Gates,3.Jeff Bezos,4.Bernard Arnault:Jeff Bezos
+The capital of France?:1.Paris,2.New York,3.Amsterdam,4.London:Paris
+Longest river in the world?:1.Amazon,2.Nile,3.Yangtze,4.Mississippi:Nile
+The capital of Armenia?:1.Paris,2.New York,3.Erevan,4.London:Erevan
+The biggest dog in the world?:1.Neopolitan Mastiff,2.Great Dane,3.English Mastiff,4.Irish Wolfhound:English Mastiff
+The capital of Russia?:1.Paris,2.Moscow,3.Amsterdam,4.London:Moscow
+Richest actress in the world?:1.Dina Merrill,2.Jami Gertz,3.Ashley Olsen,4.Jessica Alba:Dina Merrill
+Richest actor in the world?:1.Tom Cruise,2.Mel Gibson,3.Jerry Seinfeld,4.Shah Rukh khan:Jerry Seinfeld
+Most expensive car in the world?:1.1963 Ferrari 250 GTO,2.Bugatti La Voiture Noire,3.Pagani Zonda HP Barchetta,4.Bugatti Centodieci:1963 Ferrari 250 GTO
