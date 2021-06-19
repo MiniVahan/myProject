@@ -1,28 +1,64 @@
 # users/views.py
-from flask import render_template,url_for,flash,redirect,request,Blueprint
-from flask_login import login_user,current_user,logout_user,login_required
+from flask import render_template, url_for, flash, redirect, request, Blueprint, session
+from flask_login import login_user, current_user, logout_user, login_required
 from my_project import db
 from my_project.models import User
-from my_project.users.forms import RegistrationForm,LoginForm,UpdateUserForm
+from my_project.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 from my_project.users.picture_handler import add_profile_pic
+from random import randrange
+from my_project import app
+from flask_mail import Mail, Message
 
-users = Blueprint('users',__name__)
+users = Blueprint('users', __name__)
+
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'vipapikyan@gmail.com'
+app.config['MAIL_PASSWORD'] = 'VLOVEL20002001'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
+
 
 # register
-@users.route('/register',methods=['GET','POST'])
+@users.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-
     if form.validate_on_submit():
-        user = User(email=form.email.data,username=form.username.data,password=form.password.data)
+        session['email'] = form.email.data
+        session['username'] = form.username.data
+        session['password'] = form.password.data
+        value = randrange(100000, 999999, 1)
+        session['code'] = value
+        email = form.email.data
+        subject = 'Verification code number'
+        msg = f'Your verification code number is` {value}'
+
+        message = Message(subject, sender="vipapikyan@gmail.com", recipients=[email])
+        message.body = msg
+
+        mail.send(message)
+        return render_template('verification.html')
+    return render_template("register.html", form=form)
+
+
+# verification
+@users.route('/verification', methods=['GET', 'POST'])
+def verif():
+    if int(request.form['number']) == int(session['code']):
+        user = User(email=session['email'], username=session['username'], password=session['password'])
         db.session.add(user)
         db.session.commit()
-        flash("Thanks for registration!")
+        flash("Account registered successfully!")
         return redirect(url_for("users.login"))
-    return render_template("register.html",form=form)
+    else:
+        return redirect(url_for("users.verif"))
+
 
 # Login
-@users.route('/login',methods=['GET','POST'])
+@users.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
@@ -46,7 +82,7 @@ def logout():
 
 
 # account (update UserForm)
-@users.route('/account',methods=['GET','POST'])
+@users.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateUserForm()
@@ -54,20 +90,20 @@ def account():
     if form.validate_on_submit():
         if form.picture.data:
             username = current_user.username
-            pic = add_profile_pic(form.picture.data,username)
+            pic = add_profile_pic(form.picture.data, username)
             current_user.profile_image = pic
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
         flash("User Account Updated!")
         return redirect(url_for("users.account"))
-    
+
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    profile_image = url_for('static',filename='profile_pics/'+current_user.profile_image)
-    return render_template('account.html',profile_image=profile_image,form=form)
+    profile_image = url_for('static', filename='profile_pics/' + current_user.profile_image)
+    return render_template('account.html', profile_image=profile_image, form=form)
 
 
 @users.route("/dashboard")
@@ -75,5 +111,4 @@ def check_dashboard():
     page = request.args.get("page", 1, type=int)
     users = User.query.all()
     users = sorted(users, key=lambda x: int(x.numbers), reverse=True)
-    return render_template('dashboard.html',users=users, page=page)
-
+    return render_template('dashboard.html', users=users, page=page)

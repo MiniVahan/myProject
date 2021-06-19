@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="{{url_for('users.verif')}}" method="POST">
+    <input type="number" name="number" placeholder="Verification number">
+    <input type="submit" value="confirm">
+  </form>
+{% endblock %}
