@@ -1,9 +1,7 @@
-from my_project import db, app
+from my_project import db
 from werkzeug.security import generate_password_hash
 from my_project.models import User
-from flask_restful import Resource, Api
-
-api = Api(app)
+from flask_restful import Resource
 
 
 class Player(Resource):
@@ -37,5 +35,14 @@ class Player(Resource):
         return 'User has been deleted'
 
 
-# api.add_resource(Player, '/player/<string:name>')
-api.add_resource(Player,'/player/<string:name>/<email>/<password>/<number>')
+class Players(Resource):
+    def get(self):
+        users = User.query.all()
+        lst= []
+        for user in users:
+            my_dict = {'user id': user.id,
+                       'Username': user.username,
+                       'Email': user.email
+                        }
+            lst.append(my_dict)
+        return lst
