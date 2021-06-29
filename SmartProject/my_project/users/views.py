@@ -14,8 +14,8 @@ users = Blueprint('users', __name__)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'vipapikyan@gmail.com'
-app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_USERNAME'] = 'minivahan@gmail.com'
+app.config['MAIL_PASSWORD'] = 'passwordforpython'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -36,7 +36,7 @@ def register():
         subject = 'Verification code number'
         msg = f'Your verification code number is` {value}'
 
-        message = Message(subject, sender="vipapikyan@gmail.com", recipients=[email])
+        message = Message(subject, sender="minivahan@gmail.com", recipients=[email])
         message.body = msg
 
         mail.send(message)
