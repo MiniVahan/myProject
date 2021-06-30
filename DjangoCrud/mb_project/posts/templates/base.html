@@ -1,0 +1,8 @@
+<!-- templates/base.html -->
+<header>
+    <a href="{% url 'create' %}">Create</a> | <a href="{% url 'read' %}">Search</a> | <a href="{% url 'update' %}">Update</a> |
+    <a href="{% url 'delete' %}">Delete</a> |
+    <a href="{% url 'list' %}">Students list</a> |
+</header>
+{% block content %}
+{% endblock content %}

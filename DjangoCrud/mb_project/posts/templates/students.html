@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+    <br>
+</form>
+{% if student != None %}
+<table style="font-family: Helvetica, sans-serif;
+       width: 100%; text-align: left;" align="center">
+  <tr style="background-color: #04AA6D;color: white;">
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Age</th>
+    <th>Id</th>
+  </tr>
+  <tr style="background-color: #f2f2f2;">
+    <td>{{ student.name }}</td>
+    <td>{{ student.surname }}</td>
+    <td>{{ student.age }}</td>
+    <td>{{ student.pk }}</td>
+  </tr>
+</table>
+{% endif %}
+{% if info != None %}
+{{ info }}
+{% endif %}
+
+{% endblock content %}
