@@ -1,0 +1,40 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%load static%}
+<h1 style="color:#8585e0;">Welcome to the game <q>Who wants to be a millionaire?</q> </h1>
+<p style="text-align:center"><img src="{% static 'images/million.png' %}" width="250" height="250"></p><br><br><br>
+
+
+<p style="color:purple;font-size:40px;">{{ question.question }}</p>
+<DIV align="left"><TABLE>
+        <tr style="font-size:20px;">
+            <td>{{ question.answer1 }}</td>
+            <td>{{ question.answer2 }}</td>
+        </tr>
+
+        <tr style="font-size:20px;">
+            <td>{{ question.answer3 }}</td>
+            <td>{{ question.answer4 }}</td>
+        </tr>
+</TABLE>
+</DIV>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Answer">
+</form>
+{%if info == 'Wrong' %}
+<h2 style="color:red">{{info}}</h2>
+
+{%elif info == 'Right' %}
+<h2 style="color:green">{{info}}</h2>
+{%else%}
+<h2>{{info}}</h2>
+{%endif%}
+{%if number != 0 %}
+<h2>{{number}}/10</h2>
+{%endif%}
+
+{%endblock content%}
+

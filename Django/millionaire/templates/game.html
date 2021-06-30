@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<form action="{% url 'millionaire' %}">
+    <br>
+    <a href="{% url 'add_question' %}">Add question</a>
+    <input type="submit" value="Play">
+</form>
+
+{%endblock content%}

@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h1 style="text-align:left">Calculator</h1>
+
+<form action="{% url 'calculator' %}" method="POST" >{% csrf_token %}
+  <label for="fnumber">First number:</label><br>
+  <input type="text" id="fnumber" name="fnumber"><br>
+  <label for="symbol">Symbol:(+, -, /, *)</label><br>
+  <input type="text" id="symbol" name="symbol"><br>
+  <label for="lnumber">Last number:</label><br>
+  <input type="text" id="lnumber" name="lnumber"><br><br>
+  <input type="submit" value="Calculate">
+</form>
+
+{{result}}
+
+
+{%endblock content%}
